@@ -1,0 +1,7 @@
+{
+  "name": "planechase",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react-vite"
+}
