@@ -6,10 +6,14 @@ import {
 	IonTitle,
 	IonToolbar
 } from "@ionic/react";
+import {useContext} from "react";
 import {useHistory} from "react-router";
+import {card} from "../functionality/interfaces";
+import {CardDataContext} from "../functionality/state";
 
 export function MainMenuPage(): React.JSX.Element {
 	const history = useHistory();
+	const cardData = useContext<card[]>(CardDataContext);
 	return (
 		<IonPage>
 			<IonHeader>
@@ -22,6 +26,7 @@ export function MainMenuPage(): React.JSX.Element {
 					<IonButton
 						mode="ios"
 						onClick={() => history.push("/game/allCards")}
+						disabled={cardData.length == 0}
 					>
 						Play
 					</IonButton>
