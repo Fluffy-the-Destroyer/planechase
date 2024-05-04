@@ -40,7 +40,6 @@ export function App(): React.ReactNode {
         if (cards.length == 0) {
           throw Error("No data returned from scryfall");
         }
-        console.log(cards);
         storeCardData(cards).catch(console.error);
         return cards;
       })
@@ -63,7 +62,7 @@ export function App(): React.ReactNode {
       <CardDataContext.Provider value={cardData}>
         <DecksContext.Provider value={deckList}>
           <IonReactRouter>
-            <IonRouterOutlet mode="ios">
+            <IonRouterOutlet animated={false}>
               <Route path="/main_menu">
                 <MainMenuPage />
               </Route>
