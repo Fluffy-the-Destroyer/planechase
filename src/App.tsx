@@ -31,61 +31,53 @@ import {getLocalCardData, storeCardData} from "./functionality/localStorage";
 import {CardDataContext, DecksContext} from "./functionality/state";
 
 setupIonicReact();
-export function App(): JSX.Element {
-	const [cardData, setCardData] = useState<card[]>([]);
-	const [deckList, setDeckList] = useState<deck[]>([]);
-	useEffect(function () {
-		getCardData()
-			.then(function (cards) {
-				if (cards.length == 0) {
-					throw Error("No data returned from scryfall");
-				}
-				console.log(cards);
-				storeCardData(cards).catch(console.error);
-				return cards;
-			})
-			.catch(function (err) {
-				console.error(err);
-				return getLocalCardData();
-			})
-			.then(setCardData, console.error);
-	}, []);
-	useEffect(
-		function () {
-			if (cardData.length != 0) {
-				setDeckList([
-					{
-						name: "allCards",
-						cards: cardData.map(({oracle_id}) => ({
-							oracleId: oracle_id,
-							count: 1
-						}))
-					}
-				]);
-			}
-		},
-		[cardData]
-	);
-	return (
-		<IonApp>
-			<CardDataContext.Provider value={cardData}>
-				<DecksContext.Provider value={deckList}>
-					<IonReactRouter>
-						<IonRouterOutlet>
-							<Route path="/main_menu">
-								<MainMenuPage />
-							</Route>
-							<Route path="/deck_editor">
-								<DeckEditorPage />
-							</Route>
-							<Route path="/game/:deckNames">
-								<GamePage />
-							</Route>
-							<Redirect to="/main_menu" />
-						</IonRouterOutlet>
-					</IonReactRouter>
-				</DecksContext.Provider>
-			</CardDataContext.Provider>
-		</IonApp>
-	);
+export function App(): React.ReactNode {
+  const [cardData, setCardData] = useState<card[]>([]);
+  const [deckList, setDeckList] = useState<deck[]>([]);
+  useEffect(function () {
+    getCardData()
+      .then(function (cards) {
+        if (cards.length == 0) {
+          throw Error("No data returned from scryfall");
+        }
+        console.log(cards);
+        storeCardData(cards).catch(console.error);
+        return cards;
+      })
+      .catch(function (err) {
+        console.error(err);
+        return getLocalCardData();
+      })
+      .then(setCardData, console.error);
+  }, []);
+  useEffect(
+    function () {
+      if (cardData.length != 0) {
+        setDeckList([{name: "allCards", cards: cardData.map(({oracle_id}) => ({oracleId: oracle_id, count: 1}))}]);
+      }
+    },
+    [cardData]
+  );
+  return (
+    <IonApp>
+      <CardDataContext.Provider value={cardData}>
+        <DecksContext.Provider value={deckList}>
+          <IonReactRouter>
+            <IonRouterOutlet mode="ios">
+              <Route path="/main_menu">
+                <MainMenuPage />
+              </Route>
+              <Route path="/deck_editor">
+                <DeckEditorPage />
+              </Route>
+              <Route path="/game/:deckNames">
+                <GamePage />
+              </Route>
+              <Redirect exact path="/" to="/main_menu" />
+            </IonRouterOutlet>
+          </IonReactRouter>
+        </DecksContext.Provider>
+      </CardDataContext.Provider>
+    </IonApp>
+  );
 }

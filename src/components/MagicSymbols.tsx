@@ -74,7 +74,6 @@ import X from "../symbols/X.svg";
 import Y from "../symbols/Y.svg";
 import Z from "../symbols/Z.svg";
 import {IonIcon} from "@ionic/react";
-import {Fragment} from "react";
 
 const symbolMap: {[key: string]: string} = Object.create(null);
 symbolMap["T"] = T; //Tap
@@ -163,25 +162,15 @@ symbolMap["S"] = S; //Snow
 
 const symbolSplitter = /({[A-Z\/\d\u00bd\u221e]*})/;
 type MagicSymbolsProps = {text: string; keyString: string};
-export function MagicSymbols({
-	text,
-	keyString
-}: MagicSymbolsProps): React.JSX.Element {
-	var textArray: string[] = text.split(symbolSplitter);
-	var outputArray: React.JSX.Element[] = [];
-	for (let i = 0; i < textArray.length; i++) {
-		if (textArray[i].startsWith("{") && textArray[i].endsWith("}")) {
-			outputArray.push(
-				<IonIcon
-					key={`${keyString}Icon${i}`}
-					src={symbolMap[textArray[i].slice(1, -1)]}
-				/>
-			);
-		} else {
-			outputArray.push(
-				<span key={`${keyString}Text${i}`}>{textArray[i]}</span>
-			);
-		}
-	}
-	return <Fragment>{outputArray}</Fragment>;
+export function MagicSymbols({text, keyString}: MagicSymbolsProps): React.ReactNode {
+  let textArray: string[] = text.split(symbolSplitter);
+  let outputArray: React.ReactNode[] = [];
+  for (let i = 0; i < textArray.length; i++) {
+    if (textArray[i].startsWith("{") && textArray[i].endsWith("}")) {
+      outputArray.push(<IonIcon key={`${keyString}Icon${i}`} src={symbolMap[textArray[i].slice(1, -1)]} />);
+    } else {
+      outputArray.push(<span key={`${keyString}Text${i}`}>{textArray[i]}</span>);
+    }
+  }
+  return outputArray;
 }
