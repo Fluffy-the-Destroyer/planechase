@@ -33,11 +33,14 @@ export class planarDeck {
   next(this: planarDeck): void {
     this.top++;
     this.top %= this.planarLibrary.length;
+    //This causes the browser to cache the image of the next card
     new Image().src = this.planarLibrary.at((this.top + 1) % this.planarLibrary.length)!.image!;
   }
   previous(this: planarDeck): void {
     this.top--;
     this.top %= this.planarLibrary.length;
+    //This causes the browser to cache the image of the previous card
+    new Image().src = this.planarLibrary.at((this.top - 1) % this.planarLibrary.length)!.image!;
   }
   /**Function(s) to be run on chaos or encountering the phenomenon */
   extraFunction?: generator /*| generator[]*/;
@@ -54,6 +57,10 @@ export class planarDeck {
       this.planarLibrary[r] = this.planarLibrary[unshuffled];
       this.planarLibrary[unshuffled] = cardBuffer;
     }
+    //Cache the images of the new current, next and previous cards
+    new Image().src = this.planarLibrary.at(this.top)!.image!;
+    new Image().src = this.planarLibrary.at((this.top + 1) % this.planarLibrary.length)!.image!;
+    new Image().src = this.planarLibrary.at((this.top - 1) % this.planarLibrary.length)!.image!;
   }
   /**Reveals cards from the top of the planar deck (starting from the first non-active card)
    * @param cards - How many cards to reveal
