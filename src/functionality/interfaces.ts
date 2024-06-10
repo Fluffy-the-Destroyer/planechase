@@ -1,4 +1,4 @@
-import {Ruling} from "scryfall-sdk";
+import { Ruling } from "scryfall-sdk";
 
 /**A plane or phenomenon card */
 export type card = plane | phenomenon;
@@ -37,7 +37,7 @@ export interface phenomenon extends planarCard {
 
 export type deck = {
   name: string;
-  cards: {oracleId: string; count: number}[];
+  cards: { oracleId: string; count: number }[];
 };
 
 export type fn<T extends any[] = [], U = void> = (...args: T) => U;

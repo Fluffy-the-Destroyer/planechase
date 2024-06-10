@@ -10,26 +10,26 @@ import {
   IonTitle,
   IonToolbar,
 } from "@ionic/react";
-import {settings} from "ionicons/icons";
-import {Fragment, useContext, useEffect, useState} from "react";
-import {useLocation} from "react-router";
-import {card, deck} from "../functionality/interfaces";
-import {CardDataContext, DecksContext} from "../functionality/state";
-import {planarDeck} from "../functionality/functionality";
-import {Card} from "../components/Card";
-import {PlanarDeckControls} from "../components/PlanarDeckControls";
-import {Modal} from "../components/Modal";
-import {GameOptions} from "../components/GameOptions";
+import { settings } from "ionicons/icons";
+import { Fragment, useContext, useEffect, useState } from "react";
+import { useLocation } from "react-router";
+import { card, deck } from "../functionality/interfaces";
+import { CardDataContext, DecksContext } from "../functionality/state";
+import { planarDeck } from "../functionality/functionality";
+import { Card } from "../components/Card";
+import { PlanarDeckControls } from "../components/PlanarDeckControls";
+import { Modal } from "../components/Modal";
+import { GameOptions } from "../components/GameOptions";
 
 export function GamePage(): React.ReactNode {
   const location = useLocation();
   let deckNames: string[] = location.pathname.split("/")[2]?.split(",").map(decodeURIComponent);
   const cardData = useContext<card[]>(CardDataContext);
   const deckList = useContext<deck[]>(DecksContext);
-  const [deck, setDeck] = useState<planarDeck>(function () {
+  const [deck] = useState<planarDeck>(function () {
     let decks: deck[] = [];
     for (let i = 0; i < deckNames?.length; i++) {
-      let deck = deckList.find(({name}) => name == deckNames[i]);
+      let deck = deckList.find(({ name }) => name == deckNames[i]);
       if (deck != undefined) {
         decks.push(deck);
       }
@@ -76,7 +76,7 @@ export function GamePage(): React.ReactNode {
           {textFallback ? (
             <Card card={card} />
           ) : (
-            <div style={{maxHeight: `${window.innerHeight * 0.7}px`, maxWidth: `${window.innerWidth}px`}}>
+            <div style={{ maxHeight: `${window.innerHeight * 0.7}px`, maxWidth: `${window.innerWidth}px` }}>
               <img
                 style={{
                   maxHeight: "none",

@@ -1,9 +1,9 @@
-import {card} from "../functionality/interfaces";
-import {RulesText} from "./RulesText";
-import {Fragment} from "react";
+import { card } from "../functionality/interfaces";
+import { RulesText } from "./RulesText";
+import { Fragment } from "react";
 
-type CardProps = {card: card};
-export function Card({card}: CardProps): React.ReactNode {
+type CardProps = { card: card };
+export function Card({ card }: CardProps): React.ReactNode {
   //console.log(card);
   return (
     <Fragment>

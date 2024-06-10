@@ -1,10 +1,10 @@
-import {IonAlert, IonButton} from "@ionic/react";
-import {planarDeck, rollPlanarDie} from "../functionality/functionality";
-import {card, fn} from "../functionality/interfaces";
-import {useState} from "react";
+import { IonAlert, IonButton } from "@ionic/react";
+import { planarDeck, rollPlanarDie } from "../functionality/functionality";
+import { card, fn } from "../functionality/interfaces";
+import { useState } from "react";
 
-type PlanarDeckControlsProps = {deck: planarDeck; setCard: fn<[card]>; setTextModalOpen: fn<[boolean]>};
-export function PlanarDeckControls({deck, setCard, setTextModalOpen}: PlanarDeckControlsProps): React.ReactNode {
+type PlanarDeckControlsProps = { deck: planarDeck; setCard: fn<[card]>; setTextModalOpen: fn<[boolean]> };
+export function PlanarDeckControls({ deck, setCard, setTextModalOpen }: PlanarDeckControlsProps): React.ReactNode {
   const [dieResult, setDieResult] = useState<string>("");
   const [resultModalOpen, setResultModalOpen] = useState<boolean>(false);
   return (

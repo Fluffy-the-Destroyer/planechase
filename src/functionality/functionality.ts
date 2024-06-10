@@ -1,4 +1,4 @@
-import {card, deck} from "./interfaces";
+import { card, deck } from "./interfaces";
 
 /**Simulates a roll of the planar die
  * @param [chaoticAether=0] How many chaotic aethers are in effect
@@ -85,9 +85,9 @@ export class planarDeck {
     this.loadDeck(cardData, decks);
   }
   loadDeck(this: planarDeck, cardData: card[], decks: deck[]): void {
-    for (let {cards} of decks) {
-      for (let {oracleId, count} of cards) {
-        let card = cardData.find(({oracle_id}) => oracleId == oracle_id);
+    for (let { cards } of decks) {
+      for (let { oracleId, count } of cards) {
+        let card = cardData.find(({ oracle_id }) => oracleId == oracle_id);
         if (card == undefined) {
           continue;
         }

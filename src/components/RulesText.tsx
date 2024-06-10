@@ -1,7 +1,7 @@
-import {MagicSymbols} from "./MagicSymbols";
+import { MagicSymbols } from "./MagicSymbols";
 
-type RulesTextProps = {text: string; keyString: string};
-export function RulesText({text, keyString}: RulesTextProps): React.ReactNode {
+type RulesTextProps = { text: string; keyString: string };
+export function RulesText({ text, keyString }: RulesTextProps): React.ReactNode {
   let startIndex: number = text.indexOf("(") + 1;
   let endIndex = 0;
   let textArray: React.ReactNode[] = [];

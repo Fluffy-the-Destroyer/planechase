@@ -1,4 +1,4 @@
-import {IonApp, IonRouterOutlet, setupIonicReact} from "@ionic/react";
+import { IonApp, IonRouterOutlet, setupIonicReact } from "@ionic/react";
 
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css";
@@ -19,16 +19,16 @@ import "@ionic/react/css/display.css";
 /* Theme variables */
 import "./theme/variables.css";
 import "./theme/main.css";
-import {IonReactRouter} from "@ionic/react-router";
-import {Redirect, Route} from "react-router";
-import {MainMenuPage} from "./pages/MainMenuPage";
-import {DeckEditorPage} from "./pages/DeckEditorPage";
-import {GamePage} from "./pages/GamePage";
-import {useEffect, useState} from "react";
-import {card, deck} from "./functionality/interfaces";
-import {getCardData} from "./data/scryfall";
-import {getLocalCardData, storeCardData} from "./functionality/localStorage";
-import {CardDataContext, DecksContext} from "./functionality/state";
+import { IonReactRouter } from "@ionic/react-router";
+import { Redirect, Route } from "react-router";
+import { MainMenuPage } from "./pages/MainMenuPage";
+import { DeckEditorPage } from "./pages/DeckEditorPage";
+import { GamePage } from "./pages/GamePage";
+import { useEffect, useState } from "react";
+import { card, deck } from "./functionality/interfaces";
+import { getCardData } from "./data/scryfall";
+import { getLocalCardData, storeCardData } from "./functionality/localStorage";
+import { CardDataContext, DecksContext } from "./functionality/state";
 
 setupIonicReact();
 export function App(): React.ReactNode {
@@ -52,7 +52,9 @@ export function App(): React.ReactNode {
   useEffect(
     function () {
       if (cardData.length != 0) {
-        setDeckList([{name: "allCards", cards: cardData.map(({oracle_id}) => ({oracleId: oracle_id, count: 1}))}]);
+        setDeckList([
+          { name: "allCards", cards: cardData.map(({ oracle_id }) => ({ oracleId: oracle_id, count: 1 })) },
+        ]);
       }
     },
     [cardData]

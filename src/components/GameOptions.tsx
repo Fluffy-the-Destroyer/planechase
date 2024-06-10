@@ -1,9 +1,9 @@
-import {IonButton, IonIcon, IonItem, IonList} from "@ionic/react";
-import {refresh} from "ionicons/icons";
-import {fn} from "../functionality/interfaces";
+import { IonButton, IonIcon, IonItem, IonList } from "@ionic/react";
+import { refresh } from "ionicons/icons";
+import { fn } from "../functionality/interfaces";
 
-type GameOptionsProps = {shuffle: fn};
-export function GameOptions({shuffle}: GameOptionsProps): React.ReactNode {
+type GameOptionsProps = { shuffle: fn };
+export function GameOptions({ shuffle }: GameOptionsProps): React.ReactNode {
   return (
     <IonList>
       <IonItem>

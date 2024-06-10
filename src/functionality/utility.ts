@@ -1,4 +1,4 @@
-import {asyncFn, fn} from "./interfaces";
+import { asyncFn, fn } from "./interfaces";
 
 export function requestHandlerFactory<T>(fn: asyncFn<[], T>): asyncFn<[], T> {
   let buff: Promise<T> | null;
@@ -32,15 +32,15 @@ async function* queue<T extends any[], U>(fn: asyncFn<T, U>): AsyncGenerator<Pro
   let res: PromiseSettledResult<U>;
   while (true) {
     try {
-      res = {status: "fulfilled", value: await fn(...(yield res!))};
+      res = { status: "fulfilled", value: await fn(...(yield res!)) };
     } catch (err) {
-      res = {status: "rejected", reason: err};
+      res = { status: "rejected", reason: err };
     }
   }
 }
 export function queueHandlerFactory<T extends any[], U>(fn: asyncFn<T, U>): asyncFn<T, U> {
   let it = queue(fn);
-  it.next();
+  void it.next();
   return async function queueHandler(...args: T): Promise<U> {
     let res: PromiseSettledResult<U> = (await it.next(args)).value;
     if (res.status == "fulfilled") {
@@ -51,18 +51,18 @@ export function queueHandlerFactory<T extends any[], U>(fn: asyncFn<T, U>): asyn
 }
 
 export function multiQueueHandlerFactory<T extends any[], U>(fn: asyncFn<T, U>, hash: fn<T, any>): asyncFn<T, U> {
-  let queueMap: Map<any, {it: AsyncGenerator<PromiseSettledResult<U>, never, T>; count: number}> = new Map();
+  let queueMap: Map<any, { it: AsyncGenerator<PromiseSettledResult<U>, never, T>; count: number }> = new Map();
   return function multiQueueHandler(...args: T): Promise<U> {
     let argHash = hash(...args);
     let mapVal = queueMap.get(argHash);
     if (mapVal == undefined) {
-      mapVal = {it: queue(fn), count: 0};
-      mapVal.it.next();
+      mapVal = { it: queue(fn), count: 0 };
+      void mapVal.it.next();
       queueMap.set(argHash, mapVal);
     }
     mapVal.count++;
     return new Promise<U>((fulfill, reject) =>
-      mapVal!.it.next(args).then(function ({value: res}) {
+      mapVal!.it.next(args).then(function ({ value: res }) {
         if (res.status == "fulfilled") {
           fulfill(res.value);
         } else {

@@ -1,8 +1,8 @@
-import {IonButton, IonContent, IonHeader, IonPage, IonTitle, IonToolbar} from "@ionic/react";
-import {useContext} from "react";
-import {useHistory} from "react-router";
-import {card} from "../functionality/interfaces";
-import {CardDataContext} from "../functionality/state";
+import { IonButton, IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from "@ionic/react";
+import { useContext } from "react";
+import { useHistory } from "react-router";
+import { card } from "../functionality/interfaces";
+import { CardDataContext } from "../functionality/state";
 
 export function MainMenuPage(): React.ReactNode {
   const history = useHistory();

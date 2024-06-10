@@ -73,9 +73,9 @@ import WUP from "../symbols/WUP.svg";
 import X from "../symbols/X.svg";
 import Y from "../symbols/Y.svg";
 import Z from "../symbols/Z.svg";
-import {IonIcon} from "@ionic/react";
+import { IonIcon } from "@ionic/react";
 
-const symbolMap: {[key: string]: string} = Object.create(null);
+const symbolMap: { [key: string]: string } = Object.create(null);
 symbolMap["T"] = T; //Tap
 symbolMap["Q"] = Q; //Untap
 symbolMap["E"] = E; //Energy
@@ -160,9 +160,9 @@ symbolMap["G"] = G; //Green
 symbolMap["C"] = C; //Colorless
 symbolMap["S"] = S; //Snow
 
-const symbolSplitter = /({[A-Z\/\d\u00bd\u221e]*})/;
-type MagicSymbolsProps = {text: string; keyString: string};
-export function MagicSymbols({text, keyString}: MagicSymbolsProps): React.ReactNode {
+const symbolSplitter = /({[A-Z/\d\u00bd\u221e]*})/;
+type MagicSymbolsProps = { text: string; keyString: string };
+export function MagicSymbols({ text, keyString }: MagicSymbolsProps): React.ReactNode {
   let textArray: string[] = text.split(symbolSplitter);
   let outputArray: React.ReactNode[] = [];
   for (let i = 0; i < textArray.length; i++) {

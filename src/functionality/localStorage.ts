@@ -1,5 +1,5 @@
-import {Preferences} from "@capacitor/preferences";
-import {card, deck} from "./interfaces";
+import { Preferences } from "@capacitor/preferences";
+import { card, deck } from "./interfaces";
 import {
   multiQueueHandlerFactory,
   multiRequestHandlerFactory,
@@ -7,14 +7,14 @@ import {
   requestHandlerFactory,
 } from "./utility";
 
-const storageKeys = {cards: "cardData", deckNames: "storedDeckNames", allCards: ""};
+const storageKeys = { cards: "cardData", deckNames: "storedDeckNames", allCards: "" };
 
 export const storeCardData = queueHandlerFactory(function storeCardDataInternal(cards: card[]): Promise<void> {
-  return Preferences.set({key: storageKeys.cards, value: JSON.stringify(cards)});
+  return Preferences.set({ key: storageKeys.cards, value: JSON.stringify(cards) });
 });
 
 export const getLocalCardData = requestHandlerFactory(async function getLocalCardDataInternal(): Promise<card[]> {
-  return JSON.parse((await Preferences.get({key: storageKeys.cards})).value ?? "[]");
+  return JSON.parse((await Preferences.get({ key: storageKeys.cards })).value ?? "[]");
 });
 
 const addSavedDeckName = queueHandlerFactory(async function addSavedDeckNameInternal(name: string): Promise<void> {
@@ -22,7 +22,7 @@ const addSavedDeckName = queueHandlerFactory(async function addSavedDeckNameInte
     key: storageKeys.deckNames,
     value: JSON.stringify(
       Array.from(
-        new Set<string>(JSON.parse((await Preferences.get({key: storageKeys.deckNames})).value ?? "[]")).add(name)
+        new Set<string>(JSON.parse((await Preferences.get({ key: storageKeys.deckNames })).value ?? "[]")).add(name)
       )
     ),
   });
@@ -34,7 +34,7 @@ const removeStoredDeckName = queueHandlerFactory(async function removeStoredDeck
   await Preferences.set({
     key: storageKeys.deckNames,
     value: JSON.stringify(
-      JSON.parse((await Preferences.get({key: storageKeys.deckNames})).value ?? "[]").filter(
+      JSON.parse((await Preferences.get({ key: storageKeys.deckNames })).value ?? "[]").filter(
         (val: string) => val != name
       )
     ),
@@ -42,7 +42,7 @@ const removeStoredDeckName = queueHandlerFactory(async function removeStoredDeck
 });
 
 export const getStoredDeckNames = requestHandlerFactory(async function getStoredDeckNamesInternal(): Promise<string[]> {
-  return JSON.parse((await Preferences.get({key: storageKeys.deckNames})).value ?? "[]");
+  return JSON.parse((await Preferences.get({ key: storageKeys.deckNames })).value ?? "[]");
 });
 
 export const saveDeck = multiQueueHandlerFactory(
@@ -52,10 +52,10 @@ export const saveDeck = multiQueueHandlerFactory(
     }
     await Promise.all([
       addSavedDeckName(deck.name),
-      Preferences.set({key: deck.name, value: JSON.stringify(deck.cards)}),
+      Preferences.set({ key: deck.name, value: JSON.stringify(deck.cards) }),
     ]);
   },
-  ({name}) => name
+  ({ name }) => name
 );
 
 export const deleteSavedDeck = multiRequestHandlerFactory(
@@ -63,7 +63,7 @@ export const deleteSavedDeck = multiRequestHandlerFactory(
     if (Object.hasOwn(storageKeys, name)) {
       throw Error(`${name} is not valid as a deck name`);
     }
-    await Promise.all([removeStoredDeckName(name), Preferences.remove({key: name})]);
+    await Promise.all([removeStoredDeckName(name), Preferences.remove({ key: name })]);
   },
   (name) => name
 );
@@ -73,7 +73,7 @@ export const getSavedDeck = multiQueueHandlerFactory(
     if (!(await getStoredDeckNames()).includes(name)) {
       throw Error(`Deck '${name}' not found`);
     }
-    return {name, cards: JSON.parse((await Preferences.get({key: name})).value ?? "[]")};
+    return { name, cards: JSON.parse((await Preferences.get({ key: name })).value ?? "[]") };
   },
   (name) => name
 );
