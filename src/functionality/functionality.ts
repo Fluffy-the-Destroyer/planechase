@@ -33,6 +33,7 @@ export class planarDeck {
   next(this: planarDeck): void {
     this.top++;
     this.top %= this.planarLibrary.length;
+    new Image().src = this.planarLibrary.at((this.top + 1) % this.planarLibrary.length)!.image!;
   }
   previous(this: planarDeck): void {
     this.top--;
